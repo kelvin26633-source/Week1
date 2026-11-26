@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+const double RATE_PER_UNIT = 50.0;       // cost per unit consumed
+const double DISCOUNT_THRESHOLD = 100;   // units above which a discount applies
+const double DISCOUNT_RATE = 0.10;       // 10% discount
+
+// Prompts the user and returns the details through reference parameters
+void getCustomerDetails(string& name, double& unitsConsumed) {
+    cout << "Enter customer name: ";
+    getline(cin, name);
+
+    cout << "Enter units consumed: ";
+    cin >> unitsConsumed;
+}
+
+// Water Bill = Units Consumed x Rate Per Unit
+double calculateBill(double unitsConsumed, double ratePerUnit) {
+    return unitsConsumed * ratePerUnit;
+}
+
+// Returns the discount amount: 10% of the bill if units exceed 100, otherwise 0
+double applyDiscount(double bill, double unitsConsumed) {
+    if (unitsConsumed > DISCOUNT_THRESHOLD)
+        return bill * DISCOUNT_RATE;
+    return 0.0;
+}
+
+void displayBill(const string& name, double unitsConsumed, double ratePerUnit,
+                 double billBeforeDiscount, double discount, double finalAmount) {
+    cout << fixed << setprecision(2);
+    cout << "\n==================================\n";
+    cout << "         WATER BILL\n";
+    cout << "==================================\n";
+    cout << left << setw(24) << "Customer Name"         << ": " << name << "\n";
+    cout << left << setw(24) << "Units Consumed"        << ": " << unitsConsumed << "\n";
+    cout << left << setw(24) << "Rate Per Unit"         << ": " << ratePerUnit << "\n";
+    cout << left << setw(24) << "Bill Before Discount"  << ": " << billBeforeDiscount << "\n";
+    cout << left << setw(24) << "Discount"              << ": " << discount << "\n";
+    cout << "----------------------------------\n";
+    cout << left << setw(24) << "FINAL AMOUNT PAYABLE"  << ": " << finalAmount << "\n";
+    cout << "==================================\n";
+}
+
+int main() {
+    string name;
+    double unitsConsumed;
+
+    getCustomerDetails(name, unitsConsumed);
+
+    double billBeforeDiscount = calculateBill(unitsConsumed, RATE_PER_UNIT);
+    double discount           = applyDiscount(billBeforeDiscount, unitsConsumed);
+    double finalAmount        = billBeforeDiscount - discount;
+
+    displayBill(name, unitsConsumed, RATE_PER_UNIT, billBeforeDiscount, discount, finalAmount);
+
+    return 0;
+}
