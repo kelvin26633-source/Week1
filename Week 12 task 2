@@ -1,0 +1,57 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+const double PI = 3.14159265358979;
+
+// Abstract class: cannot be instantiated directly
+class Shape {
+public:
+    // Pure virtual function: each shape defines its own area calculation
+    virtual double calculateArea() = 0;
+    virtual ~Shape() {}
+};
+
+class Circle : public Shape {
+private:
+    double radius;
+
+public:
+    Circle(double r) : radius(r) {}
+
+    // Area = pi * r^2
+    double calculateArea() override {
+        return PI * radius * radius;
+    }
+};
+
+class Rectangle : public Shape {
+private:
+    double length;
+    double width;
+
+public:
+    Rectangle(double l, double w) : length(l), width(w) {}
+
+    // Area = length * width
+    double calculateArea() override {
+        return length * width;
+    }
+};
+
+int main() {
+    cout << fixed << setprecision(2);
+
+    Shape* shape;  // base class pointer
+
+    Circle circle(7);
+    Rectangle rectangle(10, 5);
+
+    shape = &circle;
+    cout << "Area of Circle (r = 7)             : " << shape->calculateArea() << "\n";
+
+    shape = &rectangle;
+    cout << "Area of Rectangle (10 x 5)         : " << shape->calculateArea() << "\n";
+
+    return 0;
+}
