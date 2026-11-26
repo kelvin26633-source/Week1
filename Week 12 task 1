@@ -1,0 +1,75 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+// Abstract class: cannot be instantiated directly
+class MedicalStaff {
+protected:
+    string name;
+    int id;
+
+public:
+    MedicalStaff(const string& n, int i) : name(n), id(i) {}
+    virtual ~MedicalStaff() {}
+
+    // Pure virtual function: each staff type must provide its own version
+    virtual double calculateSalary() = 0;
+
+    // Non-virtual function: same behaviour for all staff
+    void displayDetails() {
+        cout << "Name : " << name << "\n";
+        cout << "ID   : " << id << "\n";
+    }
+};
+
+class Doctor : public MedicalStaff {
+private:
+    double basicSalary;
+    double allowance;
+
+public:
+    Doctor(const string& n, int i, double basic, double allow)
+        : MedicalStaff(n, i), basicSalary(basic), allowance(allow) {}
+
+    // Salary = basic salary + allowance
+    double calculateSalary() override {
+        return basicSalary + allowance;
+    }
+};
+
+class Nurse : public MedicalStaff {
+private:
+    double basicSalary;
+    double overtimePay;
+
+public:
+    Nurse(const string& n, int i, double basic, double overtime)
+        : MedicalStaff(n, i), basicSalary(basic), overtimePay(overtime) {}
+
+    // Salary = basic salary + overtime pay
+    double calculateSalary() override {
+        return basicSalary + overtimePay;
+    }
+};
+
+int main() {
+    cout << fixed << setprecision(2);
+
+    MedicalStaff* staff;  // base class pointer
+
+    Doctor doctor("Dr. Grace Wanjiku", 101, 150000, 30000);
+    Nurse nurse("Peter Kamau", 202, 60000, 12000);
+
+    cout << "--- Doctor ---\n";
+    staff = &doctor;
+    staff->displayDetails();
+    cout << "Salary: " << staff->calculateSalary() << "\n\n";
+
+    cout << "--- Nurse ---\n";
+    staff = &nurse;
+    staff->displayDetails();
+    cout << "Salary: " << staff->calculateSalary() << "\n";
+
+    return 0;
+}
