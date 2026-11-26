@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    FILE *fp;
+    double amount;
+    double total = 0.0;
+    int count = 0;
+
+    fp = fopen("sales.txt", "r");
+    if (fp == NULL) {
+        printf("Error: could not open sales.txt\n");
+        return 1;
+    }
+
+    // Read one transaction amount per line until the end of the file
+    while (fscanf(fp, "%lf", &amount) == 1) {
+        total += amount;
+        count++;
+    }
+
+    // Always close the file once reading is finished
+    fclose(fp);
+
+    printf("Transactions read : %d\n", count);
+    printf("Total sales today : %.2f\n", total);
+
+    return 0;
+}
