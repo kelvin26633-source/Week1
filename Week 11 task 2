@@ -1,0 +1,63 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+class Student {
+private:
+    // Sensitive data: cannot be accessed or modified from outside the class
+    string name;
+    int admissionNumber;
+    double feeBalance;
+
+public:
+    void inputStudentData() {
+        cout << "Enter student name: ";
+        getline(cin, name);
+
+        cout << "Enter admission number: ";
+        cin >> admissionNumber;
+
+        do {
+            cout << "Enter fee balance: ";
+            cin >> feeBalance;
+            if (feeBalance < 0)
+                cout << "Fee balance cannot be negative. Try again.\n";
+        } while (feeBalance < 0);
+    }
+
+    void makePayment(double amount) {
+        if (amount <= 0) {
+            cout << "Invalid payment amount.\n";
+        } else if (amount > feeBalance) {
+            cout << "Payment exceeds the outstanding balance. Payment rejected.\n";
+        } else {
+            feeBalance -= amount;
+            cout << fixed << setprecision(2);
+            cout << "Payment of " << amount << " received successfully.\n";
+        }
+    }
+
+    void displayStatus() {
+        cout << fixed << setprecision(2);
+        cout << "\n--- Student Fee Status ---\n";
+        cout << "Name             : " << name << "\n";
+        cout << "Admission Number : " << admissionNumber << "\n";
+        cout << "Fee Balance      : " << feeBalance << "\n";
+    }
+};
+
+int main() {
+    Student student;
+
+    student.inputStudentData();
+
+    double payment;
+    cout << "Enter payment amount: ";
+    cin >> payment;
+    student.makePayment(payment);
+
+    student.displayStatus();
+
+    return 0;
+}
