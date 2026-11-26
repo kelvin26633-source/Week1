@@ -1,0 +1,48 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+class Employee {
+private:
+    // Sensitive data is hidden from direct access (encapsulation)
+    string name;
+    int id;
+    double basicSalary;
+
+public:
+    // Input and assign values to the private data members
+    void setEmployeeDetails() {
+        cout << "Enter employee name: ";
+        getline(cin, name);
+
+        cout << "Enter employee ID: ";
+        cin >> id;
+
+        cout << "Enter basic salary: ";
+        cin >> basicSalary;
+    }
+
+    // Net Salary = Basic Salary + 0.10 * Basic Salary
+    double calculateSalary() {
+        return basicSalary + 0.10 * basicSalary;
+    }
+
+    void displayEmployeeDetails() {
+        cout << fixed << setprecision(2);
+        cout << "\n--- Employee Details ---\n";
+        cout << "Name         : " << name << "\n";
+        cout << "Employee ID  : " << id << "\n";
+        cout << "Basic Salary : " << basicSalary << "\n";
+        cout << "Net Salary   : " << calculateSalary() << "\n";
+    }
+};
+
+int main() {
+    Employee emp;
+
+    emp.setEmployeeDetails();
+    emp.displayEmployeeDetails();
+
+    return 0;
+}
