@@ -1,0 +1,42 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    const int NUM_EMPLOYEES = 5;
+    const double BONUS_RATE = 0.05;
+
+    string name;
+    double basicSalary, bonus, totalSalary;
+
+    cout << fixed << setprecision(2);
+
+    // Loop through the 5 employees: input, calculate, then display each report
+    for (int i = 1; i <= NUM_EMPLOYEES; i++) {
+        cout << "\n--- Employee " << i << " ---\n";
+
+        cout << "Enter employee name: ";
+        if (i == 1)
+            getline(cin, name);
+        else
+            getline(cin >> ws, name);   // skip leftover newline from the previous input
+
+        cout << "Enter basic salary: ";
+        cin >> basicSalary;
+
+        // Bonus = 0.05 x Basic Salary
+        bonus = BONUS_RATE * basicSalary;
+
+        // Total Salary = Basic Salary + Bonus
+        totalSalary = basicSalary + bonus;
+
+        cout << "\n  Employee Report\n";
+        cout << "  Name         : " << name << "\n";
+        cout << "  Basic Salary : " << basicSalary << "\n";
+        cout << "  Bonus (5%)   : " << bonus << "\n";
+        cout << "  Total Salary : " << totalSalary << "\n";
+    }
+
+    return 0;
+}
